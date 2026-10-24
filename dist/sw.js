@@ -1,6 +1,6 @@
 const PREFIX='chess-notebook:'+new URL(self.registration.scope).pathname+':';
-const CACHE=PREFIX+'41725a4dae84';
-const FILES=["./", "./app.js", "./chess-pieces-v2.png", "./credits.html", "./icon-192.png", "./icon-512.png", "./icon.svg", "./index.html", "./manifest.webmanifest", "./sprite-offsets.json", "./style.css", "./vendor/chess-LICENSE.txt", "./vendor/chess.js", "./vendor/stockfish-19-lite-single.js", "./vendor/stockfish-19-lite-single.wasm", "./vendor/stockfish-COPYING.txt", "./wood-dark.svg", "./wood-light.svg"];
+const CACHE=PREFIX+'138feeb703bd';
+const FILES=["./", "./analysis.js", "./app.js", "./chess-pieces-v2.png", "./credits.html", "./icon-192.png", "./icon-512.png", "./icon.svg", "./index.html", "./manifest.webmanifest", "./sprite-offsets.json", "./style.css", "./vendor/chess-LICENSE.txt", "./vendor/chess.js", "./vendor/stockfish-19-lite-single.js", "./vendor/stockfish-19-lite-single.wasm", "./vendor/stockfish-COPYING.txt", "./wood-dark.svg", "./wood-light.svg"];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith(PREFIX)&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()).then(async()=>{for(const c of await self.clients.matchAll())c.postMessage('offline-ready')})));
 self.addEventListener('message',e=>{if(e.data==='status')e.waitUntil(caches.open(CACHE).then(async c=>{if((await c.keys()).length>=FILES.length)e.source?.postMessage('offline-ready')}))});

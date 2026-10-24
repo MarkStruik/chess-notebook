@@ -13,9 +13,11 @@ Select a piece to see green legal destinations. Requesting a hint enables a
 concealed hint for that position: only selecting the recommended piece reveals
 the best destination in blue. One allowance is consumed per hinted position.
 
-Move badges: ! best move; ?! inaccuracy; ? mistake; ?? blunder; # checkmate.
-These use short engine searches and approximate pawn-loss thresholds; they are
-learning guidance. A !! brilliant label is deliberately not inferred.
+Move badges: !! excellent move; ! best move; !? interesting move;
+?! inaccuracy; ? mistake; ?? blunder; # checkmate. Short engine searches
+provide approximate grades. Excellent moves must stand out from another line
+at the same completed search depth (at least 1.25 pawns); interesting moves
+require a tactical sacrifice with compensation according to the engine.
 Feedback can be turned off. Review navigation unlocks after a game ends.
 
 Timed modes include increments added after completed moves. The clock continues
@@ -47,3 +49,14 @@ dist/ on every push to main. It also supports manual runs from the Actions tab.
 Repository Settings > Pages must use GitHub Actions as its publishing source.
 The service-worker asset list is regenerated for every deployment and uses a
 cache namespace scoped to this app, so other GitHub Pages apps are unaffected.
+
+MOVE TRAILS AND FOCUS MODE
+
+Orange squares mark the origin and destination of each side's latest move.
+Each side's trail stays until that side moves again, including during review.
+Blue selection and hint markers remain distinct from the orange trails.
+
+Use Focus in the header for the board-only layout. A small hint button uses
+the same allowance and concealed hint behavior. Exit with the corner control
+or Escape. Focus is remembered on this device; completed games return to
+the normal layout for review. Clocks keep running in focus mode.

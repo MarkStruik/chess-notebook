@@ -11,3 +11,21 @@
 #engine-status{display:none}#engine-status.error{display:block;color:#f3ad96}.coach p:empty{display:none;min-height:0}.brand small{display:none}.workspace{margin-top:0}main{padding-top:22px}footer{align-items:center}.pill{font-size:9px;padding:5px 9px}.coach p{min-height:0}.empty{font:13px -apple-system,BlinkMacSystemFont,sans-serif;padding:22px}.brand{align-items:center}@media(max-width:760px){main{padding-top:12px}}
 
 .move-badge{position:absolute;right:0;top:0;z-index:5;min-width:18px;height:18px;padding:0 3px;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 12px/1 -apple-system,BlinkMacSystemFont,sans-serif;text-shadow:none;box-shadow:0 1px 5px #0007;pointer-events:none}.move-badge.good{background:#4d9350}.move-badge.dubious{background:#c68b28}.move-badge.bad{background:#c64842}@media(min-width:1000px){.move-badge{min-width:23px;height:23px;font-size:15px}}
+
+/* Keep each side's most recent origin and destination visible. */
+.sq.last-move{box-shadow:inset 0 0 0 2px #f1a448}
+.sq.last-move:before{content:'';position:absolute;inset:0;background:#f29a2e65;pointer-events:none;z-index:0}
+.sq.last-move.selected{box-shadow:inset 0 0 0 3px #61bdf4}
+.sq.last-move.selected:before{background:#f29a2e20}
+.move-badge.excellent{background:#209b95}.move-badge.interesting{background:#6788b5}
+[hidden]{display:none!important}
+#focus-controls{position:fixed;top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));display:flex;gap:8px;z-index:8}
+#focus-controls button{min-width:40px;min-height:40px;padding:8px;border:1px solid #bda57555;background:#17212be6;color:#f4dfb2;box-shadow:0 3px 12px #0005;border-radius:50%;font-size:17px}
+#focus-hint:disabled{opacity:.65}
+.focus-mode{overflow:hidden}
+.focus-mode>header,.focus-mode footer,.focus-mode aside,.focus-mode .player,.focus-mode .board-tools{display:none!important}
+.focus-mode main{width:100%;max-width:none;min-height:100dvh;margin:0;padding:56px 8px 8px;display:grid;place-items:center}
+.focus-mode .workspace{display:block;width:min(calc(100vw - 16px),calc(100dvh - 72px));margin:0}
+.focus-mode .play-area{padding:0;border:0;border-radius:7px;background:none;box-shadow:none}
+.focus-mode .board-wrap{padding:3px}
+@media(max-width:760px){#focus{font-size:0;padding:8px}#focus:before{content:'⛶';font-size:18px}}
