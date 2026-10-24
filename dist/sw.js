@@ -1,0 +1,6 @@
+const CACHE='chess-notebook-05d163d237ff';
+const FILES=["./", "./wood-dark.svg", "./chess-pieces-v2.png", "./index.html", "./sprite-offsets.json", "./icon-192.png", "./wood-light.svg", "./icon.svg", "./style.css", "./manifest.webmanifest", "./credits.html", "./app.js", "./icon-512.png", "./vendor/stockfish-19-lite-single.wasm", "./vendor/chess.js", "./vendor/stockfish-COPYING.txt", "./vendor/stockfish-19-lite-single.js", "./vendor/chess-LICENSE.txt"];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()).then(async()=>{for(const c of await self.clients.matchAll())c.postMessage('offline-ready')})));
+self.addEventListener('message',e=>{if(e.data==='status')e.waitUntil(caches.open(CACHE).then(async c=>{if((await c.keys()).length>=FILES.length)e.source?.postMessage('offline-ready')}))});
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;e.respondWith(caches.match(e.request).then(hit=>hit||fetch(e.request).catch(()=>e.request.mode==='navigate'?caches.match('./'):Response.error())))});
