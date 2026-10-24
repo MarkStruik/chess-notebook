@@ -8,10 +8,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: github-pages
-  cancel-in-progress: false
-
 jobs:
   validate:
     name: Test app and bundled Stockfish
@@ -31,6 +27,9 @@ jobs:
   deploy:
     name: Deploy GitHub Pages
     needs: validate
+    concurrency:
+      group: github-pages-publish
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       contents: read
