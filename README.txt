@@ -32,8 +32,18 @@ with sprite offsets for consistent desktop and mobile placement.
 Checks (Node.js required):
   node qa.cjs
   node engine-test.cjs
-The rules tests require chess.js; install pinned dependencies with pnpm install.
+The checks use the bundled chess rules library and engine; no installation is required.
 The Stockfish test runs the bundled engine without external dependencies.
 
 The original conversation ZIP was not retrievable. This implementation follows
 the conversation requirements and user-supplied reference images.
+
+GITHUB PAGES
+
+Live app: https://markstruik.github.io/chess-notebook/
+
+.github/workflows/pages.yml validates the app and bundled engine, then deploys
+dist/ on every push to main. It also supports manual runs from the Actions tab.
+Repository Settings > Pages must use GitHub Actions as its publishing source.
+The service-worker asset list is regenerated for every deployment and uses a
+cache namespace scoped to this app, so other GitHub Pages apps are unaffected.
