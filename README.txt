@@ -52,7 +52,9 @@ cache namespace scoped to this app, so other GitHub Pages apps are unaffected.
 
 MOVE TRAILS AND FOCUS MODE
 
-Orange squares mark the origin and destination of each side's latest move.
+Gold marks your latest move; orange marks the computer's. White uses gold and
+Black orange in two-player games. Both origins and destinations are marked,
+with stronger color on the destination.
 Each side's trail stays until that side moves again, including during review.
 Blue selection and hint markers remain distinct from the orange trails.
 
@@ -60,3 +62,7 @@ Use Focus in the header for the board-only layout. A small hint button uses
 the same allowance and concealed hint behavior. Exit with the corner control
 or Escape. Focus is remembered on this device; completed games return to
 the normal layout for review. Clocks keep running in focus mode.
+
+Board feedback uses a green star for the best move, a blue check for a good
+move, and a red cross for a mistake. Finer !!, !?, ?! and ?? badges remain.
+The move list and PGN retain the chess annotation symbols.

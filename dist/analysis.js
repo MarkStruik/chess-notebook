@@ -48,3 +48,11 @@ export function latestTrails(history, index = history.length) {
   }
   return Object.values(moves);
 }
+
+export function boardBadge(annotation) {
+  if (!annotation) return null;
+  if (annotation.label === 'Best move') return { symbol: '★', tone: 'best' };
+  if (annotation.label === 'Good move') return { symbol: '✓', tone: 'good' };
+  if (annotation.label === 'Mistake') return { symbol: '×', tone: 'bad' };
+  return annotation.symbol ? { symbol: annotation.symbol, tone: annotation.tone } : null;
+}

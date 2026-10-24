@@ -1,7 +1,7 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');const {Chess}=require('./dist/vendor/chess.js');
-const {readEngineInfo,gradeMove,latestTrails}=require('./dist/analysis.js');
+const {readEngineInfo,gradeMove,latestTrails,boardBadge}=require('./dist/analysis.js');
 const elements=new Map();function element(){return {textContent:'',style:{},dataset:{},checked:true,disabled:false,open:false,children:[],classList:{toggle(){},contains(){return false},add(){}},setAttribute(){},append(...els){this.children.push(...els)},replaceChildren(...els){this.children=els},showModal(){this.open=true},close(){this.open=false},click(){this.onclick?.()}}}
-const storage=new Map(),context=vm.createContext({Chess,readEngineInfo,gradeMove,latestTrails,console,Date,Error,JSON,Number,String,Math,Object,Promise,Blob,URL,setTimeout:()=>0,clearTimeout(){},setInterval(){},confirm:()=>true,localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},document:{getElementById(id){if(!elements.has(id))elements.set(id,element());return elements.get(id)},createElement:element,body:element(),addEventListener(){}},navigator:{},Worker:class{postMessage(){}}});
+const storage=new Map(),context=vm.createContext({Chess,readEngineInfo,gradeMove,latestTrails,boardBadge,console,Date,Error,JSON,Number,String,Math,Object,Promise,Blob,URL,setTimeout:()=>0,clearTimeout(){},setInterval(){},confirm:()=>true,localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},document:{getElementById(id){if(!elements.has(id))elements.set(id,element());return elements.get(id)},createElement:element,body:element(),addEventListener(){}},navigator:{},Worker:class{postMessage(){}}});
 vm.runInContext(fs.readFileSync('dist/app.js','utf8').replace(/^import .*?;\n/gm,''),context);const run=s=>vm.runInContext(s,context);
 function reset(fen){run(`game=new Chess(${JSON.stringify(fen)});settings={opponent:'human',color:'w',skill:6,time:'180,2',hintSide:'both',hints:1,feedback:false};ended=false;pending=false;epoch++;result='*';reason='';remaining={w:180,b:180};used={w:0,b:0};lastTick=Date.now();history=[];annotations=[];positions=[game.fen()];clockLog=[];review=null;hintMove=null;selected=null;legal=[];`)}
 (async()=>{reset();await run("makeMove({from:'e2',to:'e4'})");assert.equal(run('history[0].san'),'e4');assert.ok(run('remaining.w')>181.9);assert.match(run('exportPGN()'),/\[%clk 0:03:0/);assert.match(run('exportPGN()'),/\[TimeControl "180\+2"\]/);assert.ok(elements.get('prev').disabled);run("$('prev').onclick()");assert.equal(run('review'),null);
@@ -22,6 +22,16 @@ run("finish('1/2-1/2','Test draw');review=2;render()");assert.deepEqual(trailSqu
 run('review=0;render()');assert.deepEqual(trailSquares(),[]);
 reset();for(const m of ['e4','d5','exd5','Qxd5'])await run('makeMove('+JSON.stringify(m)+')');
 assert.deepEqual(trailSquares(),['d5','d8','e4']);assert.equal(elements.get('board').children.find(b=>b.dataset.square==='d5').dataset.lastMove.split(' ').length,2);
+const square=id=>elements.get('board').children.find(b=>b.dataset.square===id);
+assert.equal(square('d5').dataset.trailSide,'opponent');assert.equal(square('d5').dataset.trailRole,'to');assert.equal(square('e4').dataset.trailSide,'player');
+run("settings.opponent='bot';settings.color='b';render()");assert.equal(square('d5').dataset.trailSide,'player');assert.equal(square('e4').dataset.trailSide,'opponent');
+assert.equal(square('d8').dataset.trailRole,'from');
+assert.deepEqual(boardBadge({label:'Best move',symbol:'!',tone:'good'}),{symbol:'★',tone:'best'});
+assert.deepEqual(boardBadge({label:'Good move',symbol:'',tone:'good'}),{symbol:'✓',tone:'good'});
+assert.deepEqual(boardBadge({label:'Mistake',symbol:'?',tone:'bad'}),{symbol:'×',tone:'bad'});
+assert.equal(boardBadge({label:'Blunder',symbol:'??',tone:'bad'}).symbol,'??');
+run("annotations[history.length-1]={label:'Good move',symbol:'',tone:'good',evaluation:0};settings.feedback=true;render()");
+assert.ok(square('d5').children.some(child=>child.className==='move-badge good'&&child.textContent==='✓'));
 console.log('PASS: independent move trails, replacement, overlapping captures, flipped board and review.');
 
 reset();run("ready=true;render();setFocusMode(true)");assert.equal(run('focusMode'),true);assert.equal(elements.get('focus-controls').hidden,false);assert.equal(storage.get('chess-notebook-focus'),'true');assert.equal(elements.get('focus-hint').hidden,false);
