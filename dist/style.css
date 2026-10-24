@@ -41,3 +41,25 @@
 .sq.last-move.selected:before{opacity:.3}
 .move-badge.best{background:#579745;color:#fff9d3}
 .move-badge.good{background:#688cab}
+
+.avatar{position:relative;overflow:hidden;flex-shrink:0}
+.avatar.black-avatar{background:#75808c;border-color:#919ca6}
+.avatar.light{background:#29333f;border-color:#53606e}
+.avatar .piece-sprite{inset:0;width:100%;height:100%;filter:drop-shadow(0 1px 1px #0008)}
+.coach-bubble{display:none}
+.focus-mode.focus-with-coach main{padding-bottom:100px}
+.focus-mode.focus-with-coach .workspace{width:min(calc(100vw - 16px),calc(100dvh - 164px))}
+.focus-mode .play-area{position:relative}
+.focus-mode .coach-bubble{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);display:flex;align-items:flex-start;gap:12px;width:min(420px,calc(100vw - 28px));padding:12px 14px;border:1px solid #526155;border-radius:14px;background:#1b2830f5;box-shadow:0 5px 22px #0005;color:#f3ebdb;z-index:6}
+.coach-bubble:before{content:'';position:absolute;width:10px;height:10px;background:#1b2830;left:calc(50% - 5px);top:-6px;transform:rotate(45deg);border-left:1px solid #526155;border-top:1px solid #526155}
+.coach-bubble strong{font-size:11px;color:#dfc38b;font-weight:600}
+.coach-bubble p{font-size:13px;line-height:1.4;margin:5px 0 0}
+.coach-bubble button{border:0;background:none;color:#aab8ba;padding:0;min-width:22px;min-height:28px;font-size:20px;line-height:1}
+.light-theme .coach-bubble{background:#faf3e6;color:#3c352b;border-color:#bba989}
+.light-theme .coach-bubble:before{background:#faf3e6;border-color:#bba989}
+.light-theme .coach-bubble strong{color:#806334}
+/* Quiet photographic maple and walnut, shared by desktop and mobile. */
+.sq:nth-child(n),.sq:nth-child(n):hover{background-image:url('board-wood.png');background-size:200% 100%;background-position:0% center;background-color:#d5ac77}
+.sq.dark:nth-child(n),.sq.dark:nth-child(n):hover{background-position:100% center;background-color:#774c2b}
+.sq.selected:nth-child(n){background-image:linear-gradient(#62b8f64d,#62b8f64d),url('board-wood.png');background-size:100% 100%,200% 100%;background-position:0 0,0% center}
+.sq.dark.selected:nth-child(n){background-position:0 0,100% center}

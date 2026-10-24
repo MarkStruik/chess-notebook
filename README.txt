@@ -66,3 +66,13 @@ the normal layout for review. Clocks keep running in focus mode.
 Board feedback uses a green star for the best move, a blue check for a good
 move, and a red cross for a mistake. Finer !!, !?, ?! and ?? badges remain.
 The move list and PGN retain the chess annotation symbols.
+
+COACH COMMENTS
+
+Against Stockfish, short local comments describe your last analyzed move and
+stay visible in the analysis panel after the bot replies. They work offline.
+In focus mode, notable moves and mistakes get a dismissible 8.5-second chat
+bubble below the board. Ordinary quiet moves do not trigger a bubble.
+The Feedback switch disables the comments as well as move feedback.
+Black and White player badges use the same colored king artwork as the board.
+The maple/walnut photographic board texture is bundled in dist/board-wood.png.
